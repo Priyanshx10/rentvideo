@@ -211,7 +211,7 @@ The JWT expiration is 24 hours.
 Clone the repository:
 
 ```bash
-git clone https://github.com/Priy anshx10/rentvideo.git
+git clone https://github.com/Priyanshx10/rentvideo.git
 ```
 
 Change into the project directory:
