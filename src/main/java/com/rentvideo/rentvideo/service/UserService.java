@@ -16,8 +16,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -25,22 +26,20 @@ public class UserService {
     public UserResponse registerUser(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email is already registered");
+            throw new IllegalArgumentException(
+                    "Email is already registered");
         }
 
         String encodedPassword =
                 passwordEncoder.encode(request.getPassword());
 
-        Role role = request.getRole() != null
-                ? request.getRole()
-                : Role.CUSTOMER;
-
+        // Public registration must never grant ADMIN privileges.
         User user = new User(
                 request.getEmail(),
                 encodedPassword,
                 request.getFirstName(),
                 request.getLastName(),
-                role
+                Role.CUSTOMER
         );
 
         User savedUser = userRepository.save(user);

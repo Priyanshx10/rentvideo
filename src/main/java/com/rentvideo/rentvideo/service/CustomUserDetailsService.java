@@ -29,10 +29,20 @@ public class CustomUserDetailsService implements UserDetailsService {
                         )
                 );
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
-                .build();
+        UserDetails userDetails =
+                org.springframework.security.core.userdetails.User
+                        .withUsername(user.getEmail())
+                        .password(user.getPassword())
+                        .roles(user.getRole().name())
+                        .build();
+
+        System.out.println("========== SECURITY DEBUG ==========");
+        System.out.println("Email: " + userDetails.getUsername());
+        System.out.println("Database Role: " + user.getRole());
+        System.out.println("Granted Authorities: "
+                + userDetails.getAuthorities());
+        System.out.println("=====================================");
+
+        return userDetails;
     }
 }
